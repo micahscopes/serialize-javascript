@@ -412,6 +412,20 @@ describe('serialize( obj )', function () {
         });
     });
 
+
+    describe('byte arrays', function () {
+        it('should serialize byte arrays', function () {
+            var a = new Uint8Array([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+            expect(serialize(a)).to.be.a('string').equal('new Uint8Array([1,2,3,4,5,6,7,8,9,10])');
+        });
+
+        it('should deserialize a byte array', function () {
+            var a = new Uint8Array([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+            var b = eval(serialize(a));
+            expect(b).to.be.a('Uint8Array').deep.equal(a);
+        });
+    });
+
     describe('Infinity', function () {
         it('should serialize Infinity', function () {
             expect(serialize(Infinity)).to.equal('Infinity');
@@ -529,7 +543,7 @@ describe('serialize( obj )', function () {
                 fn_arrow: () => {
                     return true;
                 }
-            };            
+            };
             var obj2 = {
                 num: 123,
                 str: 'str',
